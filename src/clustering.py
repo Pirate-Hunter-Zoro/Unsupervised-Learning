@@ -144,5 +144,5 @@ class GaussianMixture:
         """
         resp = np.ones(shape=(X.shape[0], self.n_clusters, 1)) # For each point, the responsibility of each gaussian distribution - (N, K, 1)
         for k in range(self.n_clusters):
-            resp[:, k, :] = self.weights[k] * self._gaussian(X, self.means[k], self.covariances[k])
+            resp[:, k, :] = self.weights[k] * self._gaussian(X, self.means[k], self.covariances[k]).flatten()
         return np.argmax(resp, axis=1).flatten()
