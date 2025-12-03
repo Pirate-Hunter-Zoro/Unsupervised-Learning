@@ -1,7 +1,8 @@
 import numpy as np
 from sklearn.decomposition import PCA
-from sklearn.datasets import fetch_openml
 from typing import Tuple
+import pandas as pd
+from pathlib import Path
 
 def load_fashion_mnist() -> Tuple[np.array, np.array]:
     """Helper method to load the fashion mnist data and normalize the pixel values
@@ -9,7 +10,10 @@ def load_fashion_mnist() -> Tuple[np.array, np.array]:
     Returns:
         Tuple[np.array, np.array]: Normalized pixel-value observations paired with their classes
     """
-    X, y = fetch_openml("Fashion-MNIST", version=1, return_X_y=True)
+    data_path = Path("data/mnist/fashion-mnist_train.csv")
+    df = pd.read_csv(data_path)
+    y = np.array(df.iloc[:, 0].values, dtype=int)
+    X = np.array(df.iloc[:, 1:].values)
     X = X / 255.0 # Normalize pixel values
     return (X, y)
 
